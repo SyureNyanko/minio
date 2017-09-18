@@ -230,6 +230,11 @@ func serverMain(ctx *cli.Context) {
 func newObjectLayer(endpoints EndpointList) (newObject ObjectLayer, err error) {
 	// For FS only, directly use the disk.
 	isFS := len(endpoints) == 1
+
+	if true {
+		return newLTFSObjectLayer(endpoints[0].Path)
+	}
+
 	if isFS {
 		// Initialize new FS object layer.
 		return newFSObjectLayer(endpoints[0].Path)
