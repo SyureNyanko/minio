@@ -22,6 +22,7 @@ import (
 	"os/signal"
 	"runtime"
 	"syscall"
+	"fmt"
 
 	"github.com/minio/cli"
 	"github.com/minio/dsync"
@@ -124,6 +125,7 @@ func serverHandleEnvVars() {
 
 // serverMain handler called for 'minio server' command.
 func serverMain(ctx *cli.Context) {
+	fmt.Println("serverMain")
 	if !ctx.Args().Present() || ctx.Args().First() == "help" {
 		cli.ShowCommandHelpAndExit(ctx, "server", 1)
 	}
@@ -203,7 +205,7 @@ func serverMain(ctx *cli.Context) {
 	}()
 
 	signal.Notify(globalOSSignalCh, os.Interrupt, syscall.SIGTERM)
-
+	fmt.Println("dfarrghh")
 	newObject, err := newObjectLayer(globalEndpoints)
 	if err != nil {
 		errorIf(err, "Initializing object layer failed")
@@ -228,11 +230,13 @@ func serverMain(ctx *cli.Context) {
 
 // Initialize object layer with the supplied disks, objectLayer is nil upon any error.
 func newObjectLayer(endpoints EndpointList) (newObject ObjectLayer, err error) {
+
+	fmt.Println("newObjectLayer")
 	// For FS only, directly use the disk.
 	isFS := len(endpoints) == 1
 
 	if true {
-		return newLTFSObjectLayer(endpoints[0].Path)
+		return newLTFSObjectLayer(endpoints[0].Path, "/Users/syureneko/debug/")
 	}
 
 	if isFS {

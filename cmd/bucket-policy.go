@@ -143,7 +143,6 @@ func initBucketPolicies(objAPI ObjectLayer) error {
 // if bucket policy is not found.
 func readBucketPolicyJSON(bucket string, objAPI ObjectLayer) (bucketPolicyReader io.Reader, err error) {
 	policyPath := pathJoin(bucketConfigPrefix, bucket, bucketPolicyConfig)
-
 	// Acquire a read lock on policy config before reading.
 	objLock := globalNSMutex.NewNSLock(minioMetaBucket, policyPath)
 	if err = objLock.GetRLock(globalOperationTimeout); err != nil {
